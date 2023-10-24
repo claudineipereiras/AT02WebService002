@@ -1,0 +1,70 @@
+﻿<!--
+   DESIGNER: Claudinei Pereira de Sousa (ID: 100647340)
+   Date: 25/10/2023
+   Project Name: (Assignment 02 Web Services)
+-->
+
+
+@{
+    ViewBag.Title = "Movies App";
+}
+
+<h2>Find your favourite Movie or Series</h2>
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-lg-8 success">
+            <div class="card mb-3" style="max-width: 540px;">
+                <div class="row g-0">
+                    <div class="col-md-4">
+                        <img id="demo6" class="img-fluid rounded-start" alt="Poster">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 class="card-title" id="demo1">Card title</h5>
+                            <a id="demo7" class="badge bg-secondary text-decoration-none link-light" href="#!"></a>
+                            <a id="demo3" class="badge bg-secondary text-decoration-none link-light" href="#!"></a>
+                            <p class="card-text" id="demo5">Description</p>
+                            <p class="card-text" id="demo2"><small class="text-body-secondary">Released on</small></p>
+                            <p class="card-text" id="demo4"><small class="text-body-secondary">Released on</small></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+
+            <form class="d-flex" role="search" method="POST" id="form1" action="">
+                <input type="text" class="form-control me-2" id="mTitle" name="mTitle" placeholder="Enter Title Name" aria-label="Search">
+                <button class="btn btn-outline-success" type="submit" value="submit">Search</button>
+            </form>
+        </div>
+    </div>
+</div>
+@section scripts{
+    <script>
+    var weather = Object(); // Kay: this is a new "dynamic" object variable (empty template to be used with
+                            // response object which has information / values) inherited from jsonContent on Weather.cs class
+    $(document).ready(function ()
+    {
+        $.get("@Url.Action("GetMovie", "Home")", function (response)
+        {
+                 //response
+                 console.log(response);
+
+                 //weather = ko.mapping.fromJS(response);  //populate the weather object
+                 //    ko.applyBindings(weather);
+
+                 var myJSON = JSON.stringify(response);
+
+                 document.getElementById("demo1").innerHTML = JSON.parse(myJSON).Title;
+                 document.getElementById("demo2").innerHTML = JSON.parse(myJSON).Year;
+                 document.getElementById("demo3").innerHTML = JSON.parse(myJSON).Genre;
+                document.getElementById("demo4").innerHTML = JSON.parse(myJSON).Director;
+                document.getElementById("demo5").innerHTML = JSON.parse(myJSON).Plot;
+                document.getElementById("demo6").src = JSON.parse(myJSON).Poster;
+                document.getElementById("demo7").innerHTML = JSON.parse(myJSON).Type;
+        });
+    });
+
+    </script>
+}
